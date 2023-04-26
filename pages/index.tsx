@@ -1,13 +1,23 @@
 import Head from "next/head"
 import { Inter } from "next/font/google"
 import { useState } from "react"
-import { Box, FormLabel, Heading, Input, Select, Text } from "@chakra-ui/react"
+import {
+  Box,
+  Flex,
+  FormLabel,
+  Heading,
+  Input,
+  Select,
+  Spinner,
+  Text,
+} from "@chakra-ui/react"
 
 const inter = Inter({ subsets: ["latin"] })
 
 export default function Home() {
   const [question, setQuestion] = useState("")
-  const [response, setResponse] = useState("")
+  const [questions, setQuestions] = useState<string[]>([])
+  const [responses, setResponses] = useState<string[]>([])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value
@@ -16,6 +26,7 @@ export default function Home() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    setQuestions([...questions, question])
     setQuestion("")
     const response = fetch("http://127.0.0.1:5000/question", {
       method: "POST",
@@ -25,9 +36,16 @@ export default function Home() {
       },
     })
       .then((res) => res.json())
-      .then((res) => setResponse(res.answer))
+      .then((res) => setResponses((prev) => [...prev, res.answer]))
       .catch((err) => console.log(err))
   }
+
+  const qAndAs = questions.map((q, i) => {
+    return {
+      question: q,
+      answer: responses[i],
+    }
+  })
 
   return (
     <>
@@ -42,7 +60,8 @@ export default function Home() {
       </Head>
       <main>
         <Box
-          minHeight="100vh"
+          height="100vh"
+          overflow="auto"
           backgroundImage="/nerd-mascot.png"
           backgroundPosition="bottom right"
           backgroundSize={["100%", "50%"]}
@@ -54,7 +73,7 @@ export default function Home() {
           <Heading fontWeight="bold" mb={4}>
             The Rules Nerd
           </Heading>
-          <Box maxWidth={[null, "50%"]}>
+          <Flex flexDirection="column" maxWidth={[null, "50%"]}>
             <form onSubmit={handleSubmit}>
               <Box mb={2}>
                 <FormLabel>Game</FormLabel>
@@ -71,19 +90,39 @@ export default function Home() {
                 backgroundColor="blackAlpha.200"
               />
             </form>
-            {response && (
-              <Text
-                mt={4}
-                backgroundColor="blackAlpha.700"
-                borderRadius="md"
-                p={2}
-                fontSize="lg"
-                color="whiteAlpha.900"
-              >
-                {response}
-              </Text>
-            )}
-          </Box>
+            {qAndAs.length > 0 &&
+              qAndAs.reverse().map(({ question, answer }, i) => {
+                return (
+                  <Box key={`${question}`}>
+                    <Text
+                      mt={4}
+                      backgroundColor="blackAlpha.800"
+                      borderRadius="md"
+                      p={2}
+                      fontSize="lg"
+                      color="whiteAlpha.900"
+                      maxWidth="70%"
+                      mr="auto"
+                      fontWeight="bold"
+                    >
+                      {question}
+                    </Text>
+                    <Text
+                      mt={4}
+                      backgroundColor="blackAlpha.800"
+                      borderRadius="md"
+                      p={2}
+                      fontSize="lg"
+                      color="whiteAlpha.900"
+                      maxWidth="70%"
+                      ml="auto"
+                    >
+                      {answer || <Spinner size="sm" />}
+                    </Text>
+                  </Box>
+                )
+              })}
+          </Flex>
         </Box>
       </main>
     </>
