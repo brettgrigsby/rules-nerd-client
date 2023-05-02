@@ -28,13 +28,16 @@ export default function Home() {
     e.preventDefault()
     setQuestions([...questions, question])
     setQuestion("")
-    const response = fetch("http://127.0.0.1:5000/question", {
-      method: "POST",
-      body: JSON.stringify({ question }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
+    const response = fetch(
+      "https://rules-nerd-node-server.herokuapp.com/query",
+      {
+        method: "POST",
+        body: JSON.stringify({ query: question }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    )
       .then((res) => res.json())
       .then((res) => setResponses((prev) => [...prev, res.answer]))
       .catch((err) => console.log(err))
