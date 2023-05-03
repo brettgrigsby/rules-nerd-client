@@ -2,6 +2,11 @@ import Head from "next/head"
 import { Inter } from "next/font/google"
 import { useState } from "react"
 import {
+  Accordion,
+  AccordionButton,
+  AccordionIcon,
+  AccordionItem,
+  AccordionPanel,
   Box,
   Flex,
   FormLabel,
@@ -17,7 +22,9 @@ const inter = Inter({ subsets: ["latin"] })
 export default function Home() {
   const [question, setQuestion] = useState("")
   const [questions, setQuestions] = useState<string[]>([])
-  const [responses, setResponses] = useState<string[]>([])
+  const [responses, setResponses] = useState<
+    { answer: string; sources: string[] }[]
+  >([])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value
@@ -28,25 +35,22 @@ export default function Home() {
     e.preventDefault()
     setQuestions([...questions, question])
     setQuestion("")
-    const response = fetch(
-      "https://rules-nerd-node-server.herokuapp.com/query",
-      {
-        method: "POST",
-        body: JSON.stringify({ query: question }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    )
+    fetch("https://rules-nerd-node-server.herokuapp.com/query", {
+      method: "POST",
+      body: JSON.stringify({ query: question }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
       .then((res) => res.json())
-      .then((res) => setResponses((prev) => [...prev, res.answer]))
+      .then((res) => setResponses((prev) => [...prev, res]))
       .catch((err) => console.log(err))
   }
 
   const qAndAs = questions.map((q, i) => {
     return {
       question: q,
-      answer: responses[i],
+      response: responses[i],
     }
   })
 
@@ -94,7 +98,7 @@ export default function Home() {
               />
             </form>
             {qAndAs.length > 0 &&
-              qAndAs.reverse().map(({ question, answer }, i) => {
+              qAndAs.reverse().map(({ question, response }, i) => {
                 return (
                   <Box key={`${question}`}>
                     <Text
@@ -110,7 +114,7 @@ export default function Home() {
                     >
                       {question}
                     </Text>
-                    <Text
+                    <Box
                       mt={4}
                       backgroundColor="blackAlpha.800"
                       borderRadius="md"
@@ -120,8 +124,29 @@ export default function Home() {
                       maxWidth="70%"
                       ml="auto"
                     >
-                      {answer || <Spinner size="sm" />}
-                    </Text>
+                      <Text>{response?.answer || <Spinner size="sm" />}</Text>
+                      {response?.sources && (
+                        <Accordion allowToggle>
+                          <AccordionItem border="none">
+                            <Text>
+                              <Flex justify="flex-end" align="center">
+                                <Text fontSize="2xs">Show Sources</Text>
+                                <AccordionButton w="fit-content">
+                                  <AccordionIcon />
+                                </AccordionButton>
+                              </Flex>
+                            </Text>
+                            <AccordionPanel pb={4}>
+                              {response.sources.map((source) => (
+                                <Text mb={2} fontSize="xs" key={source}>
+                                  {source}
+                                </Text>
+                              ))}
+                            </AccordionPanel>
+                          </AccordionItem>
+                        </Accordion>
+                      )}
+                    </Box>
                   </Box>
                 )
               })}
