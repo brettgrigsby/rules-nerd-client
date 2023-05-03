@@ -41,8 +41,8 @@ export default function Home() {
     e.preventDefault()
     setQuestions([...questions, question])
     setQuestion("")
-    // fetch("https://rules-nerd-node-server.herokuapp.com/query", {
-    fetch("http://localhost:4000/query", {
+    fetch("https://rules-nerd-node-server.herokuapp.com/query", {
+      // fetch("http://localhost:4000/query", {
       method: "POST",
       body: JSON.stringify({ query: question, game }),
       headers: {
