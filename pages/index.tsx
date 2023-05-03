@@ -1,6 +1,6 @@
 import Head from "next/head"
 import { Inter } from "next/font/google"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import {
   Accordion,
   AccordionButton,
@@ -19,8 +19,16 @@ import {
 
 const inter = Inter({ subsets: ["latin"] })
 
+function kebabCaseToCapitalizedWords(input: string): string {
+  return input
+    .split("-")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ")
+}
+
 export default function Home() {
-  const [game, setGame] = useState<string>("android-netrunner")
+  const [game, setGame] = useState<string>("")
+  const [gameOptions, setGameOptions] = useState<string[]>([])
   const [question, setQuestion] = useState("")
   const [questions, setQuestions] = useState<string[]>([])
   const [responses, setResponses] = useState<
@@ -53,6 +61,17 @@ export default function Home() {
       .then((res) => setResponses((prev) => [...prev, res]))
       .catch((err) => console.log(err))
   }
+
+  useEffect(() => {
+    fetch("https://rules-nerd-node-server.herokuapp.com/supported-games")
+      // fetch("http://localhost:4000/supported-games")
+      .then((res) => res.json())
+      .then((res) => {
+        setGameOptions(res.games.sort())
+        setGame(res.games.sort()[0])
+      })
+      .catch((err) => console.log(err))
+  }, [])
 
   const qAndAs = questions.map((q, i) => {
     return {
@@ -95,12 +114,11 @@ export default function Home() {
                   onChange={handleGameChange}
                   backgroundColor="blackAlpha.200"
                 >
-                  <option value="android-netrunner">Android Netrunner</option>
-                  <option value="magic-the-gathering">
-                    Magic: The Gathering
-                  </option>
-                  <option value="munchkin">Munchkin</option>
-                  <option value="twilight-struggle">Twilight Struggle</option>
+                  {gameOptions.map((game) => (
+                    <option key={game} value={game}>
+                      {kebabCaseToCapitalizedWords(game)}
+                    </option>
+                  ))}
                 </Select>
               </Box>
               <FormLabel htmlFor="question">Ask your stupid question</FormLabel>
