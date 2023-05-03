@@ -20,7 +20,7 @@ import {
 const inter = Inter({ subsets: ["latin"] })
 
 export default function Home() {
-  const [game, setGame] = useState<string>("magic-the-gathering")
+  const [game, setGame] = useState<string>("android-netrunner")
   const [question, setQuestion] = useState("")
   const [questions, setQuestions] = useState<string[]>([])
   const [responses, setResponses] = useState<
@@ -95,10 +95,12 @@ export default function Home() {
                   onChange={handleGameChange}
                   backgroundColor="blackAlpha.200"
                 >
+                  <option value="android-netrunner">Android Netrunner</option>
                   <option value="magic-the-gathering">
                     Magic: The Gathering
                   </option>
-                  <option value="android-netrunner">Android Netrunner</option>
+                  <option value="munchkin">Munchkin</option>
+                  <option value="twilight-struggle">Twilight Struggle</option>
                 </Select>
               </Box>
               <FormLabel htmlFor="question">Ask your stupid question</FormLabel>
