@@ -20,6 +20,7 @@ import {
 const inter = Inter({ subsets: ["latin"] })
 
 export default function Home() {
+  const [game, setGame] = useState<string>("magic-the-gathering")
   const [question, setQuestion] = useState("")
   const [questions, setQuestions] = useState<string[]>([])
   const [responses, setResponses] = useState<
@@ -31,13 +32,19 @@ export default function Home() {
     setQuestion(val)
   }
 
+  const handleGameChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const val = e.target.value
+    setGame(val)
+  }
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setQuestions([...questions, question])
     setQuestion("")
-    fetch("https://rules-nerd-node-server.herokuapp.com/query", {
+    // fetch("https://rules-nerd-node-server.herokuapp.com/query", {
+    fetch("http://localhost:4000/query", {
       method: "POST",
-      body: JSON.stringify({ query: question }),
+      body: JSON.stringify({ query: question, game }),
       headers: {
         "Content-Type": "application/json",
       },
@@ -84,8 +91,14 @@ export default function Home() {
             <form onSubmit={handleSubmit}>
               <Box mb={2}>
                 <FormLabel>Game</FormLabel>
-                <Select backgroundColor="blackAlpha.200">
-                  <option>Magic: The Gathering</option>
+                <Select
+                  onChange={handleGameChange}
+                  backgroundColor="blackAlpha.200"
+                >
+                  <option value="magic-the-gathering">
+                    Magic: The Gathering
+                  </option>
+                  <option value="android-netrunner">Android Netrunner</option>
                 </Select>
               </Box>
               <FormLabel htmlFor="question">Ask your stupid question</FormLabel>
