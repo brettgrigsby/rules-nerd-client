@@ -106,7 +106,7 @@ export default function Home() {
           overflow="auto"
           backgroundImage="/nerd-mascot.png"
           backgroundPosition="bottom right"
-          backgroundSize={["100%", "50%"]}
+          backgroundSize={["100%", "70%", "55%", "50%"]}
           backgroundRepeat="no-repeat"
           backgroundColor="rgb(252, 252, 248)"
           color="blackAlpha.900"
@@ -115,7 +115,7 @@ export default function Home() {
           <Heading fontWeight="bold" mb={4}>
             The Rules Nerd
           </Heading>
-          <Flex flexDirection="column" maxWidth={[null, "50%"]}>
+          <Flex flexDirection="column" maxWidth={[null, null, "50%"]}>
             <form onSubmit={handleSubmit}>
               <Box mb={2}>
                 <FormLabel>Game</FormLabel>
@@ -204,6 +204,27 @@ export default function Home() {
               })}
           </Flex>
         </Box>
+        <Flex
+          w={["100%", null, "50%"]}
+          align="center"
+          position="fixed"
+          bottom={0}
+          left={0}
+          color={["whiteAlpha.900", null, "gray.500"]}
+          fontSize="xs"
+          p={1}
+          backgroundColor={["blackAlpha.800", null, "transparent"]}
+        >
+          <Text>feedback, questions, or game requests? </Text>
+          <Text fontWeight="bold" ml={1}>
+            <a
+              href="mailto:gbrett@gmail.com?subject=Rules%20Nerd%20Feedback"
+              target="_blank"
+            >
+              Email me
+            </a>
+          </Text>
+        </Flex>
       </main>
     </>
   )
