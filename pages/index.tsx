@@ -51,6 +51,8 @@ export default function Home() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setQuestions([...questions, question])
+    const input = document.getElementById("question-input") as HTMLInputElement
+    input?.blur()
     setQuestion("")
     fetch("https://rules-nerd-node-server.herokuapp.com/query", {
       // fetch("http://localhost:4000/query", {
@@ -131,6 +133,7 @@ export default function Home() {
               <FormLabel htmlFor="question">Ask your stupid question</FormLabel>
               <Flex>
                 <Input
+                  id="question-input"
                   value={question}
                   onChange={handleChange}
                   type="textbox"
