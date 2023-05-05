@@ -88,7 +88,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Rules Nerd</title>
+        <title>VMLY&R Sandbox</title>
         <meta
           name="description"
           content="A friendly AI to answer all your questions"
