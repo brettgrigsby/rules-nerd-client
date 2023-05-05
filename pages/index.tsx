@@ -140,7 +140,7 @@ export default function Home() {
                   <Box key={`${question}`}>
                     <Text
                       mt={4}
-                      backgroundColor="blackAlpha.800"
+                      backgroundColor="blackAlpha.900"
                       borderRadius="md"
                       p={2}
                       fontSize="lg"
@@ -153,7 +153,7 @@ export default function Home() {
                     </Text>
                     <Box
                       mt={4}
-                      backgroundColor="blackAlpha.800"
+                      backgroundColor="blackAlpha.900"
                       borderRadius="md"
                       p={2}
                       fontSize="lg"
