@@ -8,14 +8,17 @@ import {
   AccordionItem,
   AccordionPanel,
   Box,
+  Button,
   Flex,
   FormLabel,
   Heading,
+  IconButton,
   Input,
   Select,
   Spinner,
   Text,
 } from "@chakra-ui/react"
+import { SearchIcon } from "@chakra-ui/icons"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -126,13 +129,22 @@ export default function Home() {
                 </Select>
               </Box>
               <FormLabel htmlFor="question">Ask your stupid question</FormLabel>
-              <Input
-                value={question}
-                onChange={handleChange}
-                type="textbox"
-                placeholder="ask away"
-                backgroundColor="blackAlpha.200"
-              />
+              <Flex>
+                <Input
+                  value={question}
+                  onChange={handleChange}
+                  type="textbox"
+                  placeholder="ask away"
+                  backgroundColor="blackAlpha.200"
+                />
+                <IconButton
+                  type="submit"
+                  aria-label="Search rules"
+                  icon={<SearchIcon />}
+                  backgroundColor="blackAlpha.200"
+                  ml={1}
+                />
+              </Flex>
             </form>
             {qAndAs.length > 0 &&
               qAndAs.reverse().map(({ question, response }, i) => {
