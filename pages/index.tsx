@@ -89,6 +89,10 @@ export default function Home() {
           content="A friendly AI to answer all your game rules questions"
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta
+          property="og:image"
+          content="https://rulesnerd.com/preview-image.png"
+        ></meta>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
