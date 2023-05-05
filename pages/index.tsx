@@ -57,7 +57,7 @@ export default function Home() {
     fetch("https://rules-nerd-node-server.herokuapp.com/query", {
       // fetch("http://localhost:4000/query", {
       method: "POST",
-      body: JSON.stringify({ query: question, game }),
+      body: JSON.stringify({ query: question, game: "vmlynr-sandbox" }),
       headers: {
         "Content-Type": "application/json",
       },
@@ -91,34 +91,34 @@ export default function Home() {
         <title>Rules Nerd</title>
         <meta
           name="description"
-          content="A friendly AI to answer all your game rules questions"
+          content="A friendly AI to answer all your questions"
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta
+        {/* <meta
           property="og:image"
           content="https://rulesnerd.com/preview-image.png"
-        ></meta>
+        ></meta> */}
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
         <Box
           height="100vh"
           overflow="auto"
-          backgroundImage="/nerd-mascot.png"
-          backgroundPosition="bottom right"
-          backgroundSize={["100%", "50%"]}
-          backgroundRepeat="no-repeat"
+          // backgroundImage="/nerd-mascot.png"
+          // backgroundPosition="bottom right"
+          // backgroundSize={["100%", "50%"]}
+          // backgroundRepeat="no-repeat"
           backgroundColor="rgb(252, 252, 248)"
           color="blackAlpha.900"
           p={2}
         >
-          <Heading fontWeight="bold" mb={4}>
-            The Rules Nerd
+          <Heading fontWeight="bold" mb={4} textAlign="center">
+            VMLY&R Sandbox
           </Heading>
-          <Flex flexDirection="column" maxWidth={[null, "50%"]}>
+          <Flex flexDirection="column" m="auto" maxWidth={[null, "75%", "50%"]}>
             <form onSubmit={handleSubmit}>
               <Box mb={2}>
-                <FormLabel>Game</FormLabel>
+                {/* <FormLabel>Game</FormLabel>
                 <Select
                   onChange={handleGameChange}
                   backgroundColor="blackAlpha.200"
@@ -128,9 +128,9 @@ export default function Home() {
                       {kebabCaseToCapitalizedWords(game)}
                     </option>
                   ))}
-                </Select>
+                </Select> */}
               </Box>
-              <FormLabel htmlFor="question">Ask your stupid question</FormLabel>
+              <FormLabel htmlFor="question">Ask your question</FormLabel>
               <Flex>
                 <Input
                   id="question-input"
