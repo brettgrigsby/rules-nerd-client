@@ -221,7 +221,7 @@ export default function Home() {
                         <Accordion allowToggle>
                           <AccordionItem border="none">
                             <Flex justify="flex-end" align="center">
-                              <AccordionButton py={0} w="fit-content">
+                              <AccordionButton p={0} w="fit-content">
                                 <Text fontSize="2xs">Show Sources</Text>
                                 <AccordionIcon />
                               </AccordionButton>
