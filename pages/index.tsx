@@ -108,6 +108,10 @@ export default function Home() {
       ...provided,
       backgroundColor: "rgb(232, 232, 229)",
     }),
+    indicatorsContainer: (provided) => ({
+      ...provided,
+      backgroundColor: "transparent",
+    }),
     option: (provided, state) => ({
       ...provided,
       backgroundColor: state.isFocused ? "blackAlpha.200" : "transparent",
@@ -183,7 +187,7 @@ export default function Home() {
             {qAndAs.length > 0 &&
               qAndAs.reverse().map(({ question, response }, i) => {
                 return (
-                  <Box key={`${question}`}>
+                  <Box key={`${question}-${response?.answer}`}>
                     <Box
                       mt={4}
                       backgroundColor="blackAlpha.900"
