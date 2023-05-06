@@ -8,19 +8,24 @@ import {
   AccordionItem,
   AccordionPanel,
   Box,
-  Button,
   Flex,
   FormLabel,
+  FormControl,
   Heading,
   IconButton,
   Input,
-  Select,
   Spinner,
   Text,
 } from "@chakra-ui/react"
 import { SearchIcon } from "@chakra-ui/icons"
+import { ChakraStylesConfig, Select, SingleValue } from "chakra-react-select"
 
 const inter = Inter({ subsets: ["latin"] })
+
+type GameOption = {
+  label: string
+  value: string
+}
 
 function kebabCaseToCapitalizedWords(input: string): string {
   return input
@@ -43,8 +48,9 @@ export default function Home() {
     setQuestion(val)
   }
 
-  const handleGameChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const val = e.target.value
+  const handleGameChange = (newValue: unknown) => {
+    const val = (newValue as GameOption)?.value
+    if (!val) return
     setGame(val)
   }
 
@@ -85,6 +91,28 @@ export default function Home() {
     }
   })
 
+  const options = (gameOptions || []).map((game) => ({
+    label: kebabCaseToCapitalizedWords(game),
+    value: game,
+  }))
+  const chakraStyles: ChakraStylesConfig = {
+    control: (provided) => ({
+      ...provided,
+      backgroundColor: "blackAlpha.200",
+    }),
+    placeholder: (provided) => ({
+      ...provided,
+      color: "blackAlpha.500",
+    }),
+    menuList: (provided) => ({
+      ...provided,
+      backgroundColor: "rgb(232, 232, 229)",
+    }),
+    option: (provided) => ({
+      ...provided,
+      backgroundColor: "rgb(232, 232, 229)",
+    }),
+  }
   return (
     <>
       <Head>
@@ -118,17 +146,19 @@ export default function Home() {
           <Flex flexDirection="column" maxWidth={[null, null, "50%"]}>
             <form onSubmit={handleSubmit}>
               <Box mb={2}>
-                <FormLabel>Game</FormLabel>
-                <Select
-                  onChange={handleGameChange}
-                  backgroundColor="blackAlpha.200"
-                >
-                  {gameOptions.map((game) => (
-                    <option key={game} value={game}>
-                      {kebabCaseToCapitalizedWords(game)}
-                    </option>
-                  ))}
-                </Select>
+                <FormControl>
+                  <FormLabel>Game</FormLabel>
+                  <Select
+                    id="game-select"
+                    name="games"
+                    options={options}
+                    placeholder="Select game..."
+                    selectedOptionStyle="check"
+                    selectedOptionColorScheme="blackAlpha"
+                    onChange={handleGameChange}
+                    chakraStyles={chakraStyles}
+                  />
+                </FormControl>
               </Box>
               <FormLabel htmlFor="question">Ask your stupid question</FormLabel>
               <Flex>
@@ -139,6 +169,7 @@ export default function Home() {
                   type="textbox"
                   placeholder="ask away"
                   backgroundColor="blackAlpha.200"
+                  _placeholder={{ color: "blackAlpha.500" }}
                 />
                 <IconButton
                   type="submit"
