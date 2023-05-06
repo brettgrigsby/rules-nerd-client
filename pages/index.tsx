@@ -108,9 +108,9 @@ export default function Home() {
       ...provided,
       backgroundColor: "rgb(232, 232, 229)",
     }),
-    option: (provided) => ({
+    option: (provided, state) => ({
       ...provided,
-      backgroundColor: "rgb(232, 232, 229)",
+      backgroundColor: state.isFocused ? "blackAlpha.200" : "transparent",
     }),
   }
   return (
@@ -184,24 +184,29 @@ export default function Home() {
               qAndAs.reverse().map(({ question, response }, i) => {
                 return (
                   <Box key={`${question}`}>
-                    <Text
-                      mt={4}
-                      backgroundColor="blackAlpha.900"
-                      borderRadius="md"
-                      p={2}
-                      fontSize="lg"
-                      color="whiteAlpha.900"
-                      maxWidth="70%"
-                      mr="auto"
-                      fontWeight="bold"
-                    >
-                      {question}
-                    </Text>
                     <Box
                       mt={4}
                       backgroundColor="blackAlpha.900"
                       borderRadius="md"
-                      p={2}
+                      px={4}
+                      py={2}
+                      mr="auto"
+                      maxWidth="70%"
+                    >
+                      <Text
+                        fontSize="lg"
+                        color="whiteAlpha.900"
+                        fontStyle="italic"
+                      >
+                        {question}
+                      </Text>
+                    </Box>
+                    <Box
+                      mt={4}
+                      backgroundColor="blackAlpha.900"
+                      borderRadius="md"
+                      px={4}
+                      py={2}
                       fontSize="lg"
                       color="whiteAlpha.900"
                       maxWidth="70%"
@@ -211,14 +216,12 @@ export default function Home() {
                       {response?.sources && (
                         <Accordion allowToggle>
                           <AccordionItem border="none">
-                            <Text>
-                              <Flex justify="flex-end" align="center">
+                            <Flex justify="flex-end" align="center">
+                              <AccordionButton py={0} w="fit-content">
                                 <Text fontSize="2xs">Show Sources</Text>
-                                <AccordionButton w="fit-content">
-                                  <AccordionIcon />
-                                </AccordionButton>
-                              </Flex>
-                            </Text>
+                                <AccordionIcon />
+                              </AccordionButton>
+                            </Flex>
                             <AccordionPanel pb={4}>
                               {response.sources.map((source) => (
                                 <Text mb={2} fontSize="xs" key={source}>
