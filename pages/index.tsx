@@ -43,10 +43,10 @@ export default function Home() {
     setQuestion(val)
   }
 
-  const handleGameChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const val = e.target.value
-    setGame(val)
-  }
+  // const handleGameChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  //   const val = e.target.value
+  //   setGame(val)
+  // }
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -57,7 +57,7 @@ export default function Home() {
     fetch("https://rules-nerd-node-server.herokuapp.com/query", {
       // fetch("http://localhost:4000/query", {
       method: "POST",
-      body: JSON.stringify({ query: question, game: "vmlynr-sandbox" }),
+      body: JSON.stringify({ query: question, game: "vmlynr" }),
       headers: {
         "Content-Type": "application/json",
       },
@@ -67,16 +67,16 @@ export default function Home() {
       .catch((err) => console.log(err))
   }
 
-  useEffect(() => {
-    fetch("https://rules-nerd-node-server.herokuapp.com/supported-games")
-      // fetch("http://localhost:4000/supported-games")
-      .then((res) => res.json())
-      .then((res) => {
-        setGameOptions(res.games.sort())
-        setGame(res.games.sort()[0])
-      })
-      .catch((err) => console.log(err))
-  }, [])
+  // useEffect(() => {
+  //   fetch("https://rules-nerd-node-server.herokuapp.com/supported-games")
+  //     // fetch("http://localhost:4000/supported-games")
+  //     .then((res) => res.json())
+  //     .then((res) => {
+  //       setGameOptions(res.games.sort())
+  //       setGame(res.games.sort()[0])
+  //     })
+  //     .catch((err) => console.log(err))
+  // }, [])
 
   const qAndAs = questions.map((q, i) => {
     return {
