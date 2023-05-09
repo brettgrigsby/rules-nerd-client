@@ -121,15 +121,35 @@ export default function Home() {
     <>
       <Head>
         <title>Rules Nerd</title>
+        <meta property="og:title" content="Rules Nerd" />
         <meta
           name="description"
+          content="A friendly AI to answer all your game rules questions"
+        />
+        <meta
+          property="og:description"
           content="A friendly AI to answer all your game rules questions"
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta
           property="og:image"
           content="https://rulesnerd.com/preview-image.png"
-        ></meta>
+        />
+        <meta property="og:url" content="https://www.rulesnerd.com/" />
+        <meta property="og:type" content="website" />
+
+        <meta name="twitter:title" content="Rules Nerd" />
+        <meta
+          name="twitter:description"
+          content="A friendly AI to answer all your game rules questions"
+        />
+        <meta
+          name="twitter:image"
+          content="https://rulesnerd.com/preview-image.png"
+        />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:url" content="https://www.rulesnerd.com/" />
+
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
